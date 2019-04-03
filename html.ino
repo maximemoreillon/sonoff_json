@@ -1,6 +1,4 @@
-const String device_name = HOSTNAME;
-
-// Head partias
+// Head partials
 // Style
 const String styles = "<style>"
   ".status{"
@@ -42,7 +40,7 @@ String update_form = "<h2>Firmware update</h2>"
 
 // Combinations
 String head ="<head>"
-  "<title>" + device_name +"</title>"
+  "<title>" + String(HOSTNAME) +"</title>"
   + styles +
   "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
   "<link rel='stylesheet' type='text/css' href='http://maximemoreillon.com/web_components/master_css/master.css'>"
