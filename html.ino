@@ -15,7 +15,7 @@ const String styles = "<style>"
 
 // Body partials
 const String header = "<div class='header'>"
-  + device_name +
+  + String(HOSTNAME) +
   "</div>";
 
 const String nav = "<div class='nav'>"
