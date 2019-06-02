@@ -16,10 +16,26 @@ void IO_setup(){
 }
 
 void turn_relay_on(){
+  
   Serial.println(F("[IO] Turning Relay ON"));
+  
+  relay_state = "ON";
+  
+  // Send new state my MQTT
+  MQTT_publish_state();
+
+  // Update content of web page
+  ws_update_state();
+  
+  long time_delta = millis() - off_time;
+  if(time_delta < BACK_ON_MIN_PAUSE) {
+    Serial.println(F("[IO] waiting before turning back on"));
+    delay(BACK_ON_MIN_PAUSE - time_delta);
+  }
+  
   digitalWrite(RELAY_PIN, HIGH);
   digitalWrite(LED_PIN, LOW); // LED is active LOW
-  relay_state = "ON";
+  
 }
 
 void turn_relay_off(){
@@ -27,6 +43,13 @@ void turn_relay_off(){
   digitalWrite(RELAY_PIN, LOW);
   digitalWrite(LED_PIN, HIGH); // LED is active LOW
   relay_state = "OFF";
+  off_time = millis();
+  
+  // Send new state my MQTT
+  MQTT_publish_state();
+
+  // Update content of web page
+  ws_update_state();
 }
 
 void toggle_relay(){
@@ -71,14 +94,7 @@ void read_button() {
         Serial.println(F("[IO] Button pressed"));
 
         // Toggle_relay state
-        toggle_relay();
-
-        // Send new state my MQTT
-        MQTT_publish_state();
-
-        // Update content of web page
-        ws_update_state();
-        
+        toggle_relay();        
       }
     }
   }

@@ -17,10 +17,10 @@
 #include <WebSocketsServer.h>
 
 #include "credentials.h";
-//#include "sonoff_kitchen_light_nagoya.h";
+#include "sonoff_kitchen_light_nagoya.h";
 //#include "sonoff_living_light_nagoya.h";
 //#include "sonoff_bedroom_light_nagoya.h";
-#include "sonoff_test.h";
+//#include "sonoff_test.h";
 
 // MQTT
 #define MQTT_BROKER_ADDRESS IPAddress(192, 168, 1, 2)
@@ -38,6 +38,13 @@
 #define WWW_PORT 80
 #define WS_PORT 81
 
+// Misc
+// delay to prevent turning back on too soon after turning off
+// Used for some ceiling lights that have mode cycling
+#ifndef BACK_ON_MIN_PAUSE
+#define BACK_ON_MIN_PAUSE 0
+#endif
+
 // Global variables
 WiFiClient wifi_client;
 PubSubClient MQTT_client(wifi_client);
@@ -47,7 +54,9 @@ ESP8266WebServer web_server(WWW_PORT);
 WebSocketsServer ws_server = WebSocketsServer(WS_PORT);
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
 
+// Global variables
 char* relay_state = INITIAL_STATE;
+long off_time = 0;
 
 void setup() {
   // Mandatory initial delay

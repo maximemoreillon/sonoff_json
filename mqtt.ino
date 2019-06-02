@@ -73,12 +73,5 @@ void MQTT_message_callback(char* topic, byte* payload, unsigned int length) {
   }
   else if(strcmp(command_state, "TOGGLE") == 0 || strcmp(command_state, "toggle") == 0){
     toggle_relay();
-  }
-
-  // Generating the response
-  MQTT_publish_state();
-
-  // Update content of web page
-  ws_update_state();
-  
+  }  
 }

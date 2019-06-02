@@ -24,12 +24,6 @@ void handle_on() {
 
   turn_relay_on();
 
-  // Send new state my MQTT
-  MQTT_publish_state();
-
-  // Update content of web page
-  ws_update_state();
-
   // Respond to web request
   web_server.sendHeader("Connection", "close");
   web_server.sendHeader("Access-Control-Allow-Origin", "*");
@@ -40,12 +34,6 @@ void handle_off() {
   Serial.println(F("[Web server] OFF requested"));
 
   turn_relay_off();
-
-  // Send new state my MQTT
-  MQTT_publish_state();
-
-  // Update content of web page
-  ws_update_state();
 
   // Respond to web request
   web_server.sendHeader("Connection", "close");
@@ -58,12 +46,6 @@ void handle_toggle() {
 
   // Toggle relay
   toggle_relay();
-
-  // Send new state my MQTT
-  MQTT_publish_state();
-
-  // Update content of web page
-  ws_update_state();
 
   // Respond to web request
   web_server.sendHeader("Connection", "close");
