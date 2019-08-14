@@ -26,7 +26,8 @@ void turn_relay_on(){
 
   // Update content of web page
   ws_update_state();
-  
+
+  // Delay before turning back on, needed for some lights
   long time_delta = millis() - off_time;
   if(time_delta < BACK_ON_MIN_PAUSE) {
     Serial.println(F("[IO] waiting before turning back on"));

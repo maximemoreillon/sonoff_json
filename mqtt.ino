@@ -50,6 +50,7 @@ void MQTT_connection_manager(){
 
 void MQTT_message_callback(char* topic, byte* payload, unsigned int length) {
 
+  // Debugging
   Serial.print(F("[MQTTT] message received on "));
   Serial.print(topic);
   Serial.print(F(", payload: "));
@@ -63,15 +64,21 @@ void MQTT_message_callback(char* topic, byte* payload, unsigned int length) {
   StaticJsonDocument<200> inbound_JSON_message;
   deserializeJson(inbound_JSON_message, payload);
 
-  const char* command_state = inbound_JSON_message["state"];
+  // Extracting the command state from payload
+  // Normally a const char* but copied using strdup so as to turn it into a char* for manipulation with strlwr
+  char* command_state = strdup(inbound_JSON_message["state"]);
 
-  if(strcmp(command_state, "ON") == 0 || strcmp(command_state, "on") == 0){
+  // Reacting accordingly
+  if(strcmp(strlwr(command_state), "on") == 0){
     turn_relay_on();
   }
-  else if(strcmp(command_state, "OFF") == 0 || strcmp(command_state, "off") == 0){
+  else if(strcmp(strlwr(command_state), "off") == 0){
     turn_relay_off();
   }
-  else if(strcmp(command_state, "TOGGLE") == 0 || strcmp(command_state, "toggle") == 0){
+  else if(strcmp(strlwr(command_state), "toggle") == 0){
     toggle_relay();
-  }  
+  } 
+
+  // No need for the copy anymore at this point
+  free(command_state);
 }

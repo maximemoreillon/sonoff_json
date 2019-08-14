@@ -2,7 +2,6 @@ void websocket_setup(){
   Serial.println(F("[WS] WS setup"));
   ws_server.begin();
   ws_server.onEvent(webSocketEvent);
-
 }
 
 void ws_update_state(){

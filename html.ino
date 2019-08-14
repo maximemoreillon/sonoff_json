@@ -51,6 +51,7 @@ String head ="<head>"
   "<title>" + String(HOSTNAME) +"</title>"
   + styles +
   "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
+  "<link rel='icon' href='https://webcomponents.maximemoreillon.com/logo/logo.png'>"
   "<link rel='stylesheet' type='text/css' href='https://webcomponents.maximemoreillon.com/master_css/master.css'>"
   "<link rel='stylesheet' type='text/css' href='https://webcomponents.maximemoreillon.com/modals/modals.css'>"
   "<link rel='stylesheet' type='text/css' href='https://webcomponents.maximemoreillon.com/loader/loader.css'>"

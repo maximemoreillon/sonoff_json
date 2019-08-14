@@ -17,8 +17,8 @@
 #include <WebSocketsServer.h>
 
 #include "credentials.h";
-#include "sonoff_kitchen_light_nagoya.h";
-//#include "sonoff_living_light_nagoya.h";
+//#include "sonoff_kitchen_light_nagoya.h";
+#include "sonoff_living_light_nagoya.h";
 //#include "sonoff_bedroom_light_nagoya.h";
 //#include "sonoff_test.h";
 
