@@ -54,12 +54,9 @@ void MQTT_message_callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(F("[MQTTT] message received on "));
   Serial.print(topic);
   Serial.print(F(", payload: "));
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-  }
+  for (int i = 0; i < length; i++) Serial.print((char)payload[i]);
   Serial.println();
 
-  
   // Parsing payload as JSON
   StaticJsonDocument<200> inbound_JSON_message;
   deserializeJson(inbound_JSON_message, payload);
@@ -69,16 +66,10 @@ void MQTT_message_callback(char* topic, byte* payload, unsigned int length) {
   char* command_state = strdup(inbound_JSON_message["state"]);
 
   // Reacting accordingly
-  if(strcmp(strlwr(command_state), "on") == 0){
-    turn_relay_on();
-  }
-  else if(strcmp(strlwr(command_state), "off") == 0){
-    turn_relay_off();
-  }
-  else if(strcmp(strlwr(command_state), "toggle") == 0){
-    toggle_relay();
-  } 
+  if(strcmp(strlwr(command_state), "on") == 0) turn_relay_on();
+  else if(strcmp(strlwr(command_state), "off") == 0) turn_relay_off();
+  else if(strcmp(strlwr(command_state), "toggle") == 0) toggle_relay(); 
 
-  // No need for the copy anymore at this point
+  // Free memory
   free(command_state);
 }
